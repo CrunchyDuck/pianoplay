@@ -694,7 +694,7 @@ class PianoPlay():
 
 
 		else: # If there's only 1 tempo through the whole song, we can simply convert the delta times directly.
-
+			self.tempo = self.tempoList[1] # Select the first (and only) tempo.
 			# Sustain pedal data.
 			sustainEvents = len(self.sustainList) / 2
 			i = 0
@@ -871,7 +871,9 @@ pn = PianoPlay() # This just calls the above class.
 # Note on above. Further investigation reveals a pattern that looks like it has to do with how I'm decoding the variable-length values. Further testing required.
 # Definitely change how I'm finding the relative path. It will not work if literally anything is renamed.
 # Update comments about usage.
-
+# Check why animation is too fast.
+# Add in <division> type 1 code.
+# Model a full piano and arena to showcase the software.
 
 
 
