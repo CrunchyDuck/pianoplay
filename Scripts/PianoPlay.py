@@ -1,6 +1,6 @@
 import bpy
 import math
-from pathlib import Path
+import os
 
 # noinspection PyRedundantParentheses
 class PianoPlay():
@@ -61,7 +61,8 @@ class PianoPlay():
 		# https://www.midi.org/specifications-old/item/the-midi-1-0-specification
 		# You'll need to make an account for that last one, but it's also the most important. It explains how the data in MIDI is stored, especially under the segment about "Chunking"
 
-		self.fileLocation = Path(__file__).parent.parent + "\\MIDI\\" + fileName
+		osPath = os.path.dirname(os.path.abspath(__file__))
+		self.fileLocation = osPath[:-27] + "/MIDI/" + fileName # VERY much not a fan of python's path handling. This is an incredibly temporary and ugly solution to save me sanity.
 		self.output = FileManager()
 		self.projName = "PianoPlay"
 		self.ex = "Exiting " + self.projName + " script..." # Just the exiting message.
@@ -102,8 +103,8 @@ class PianoPlay():
 
 		print("---------------------------------------------")  # This just clears some space in the console. Makes it easier for me to read during testing.
 		print("Running PianoPlay...")
-		fileName = self.fileLocation.split("/") # This might cause errors on platforms that use \? I'll need to test.
-		print("File name: " + fileName[-1])
+		# fileName = self.fileLocation.split("/") # This might cause errors on platforms that use \? I'll need to test.
+		# print("File name: " + fileName[-1])
 
 		self.indexObjects()
 		self.openFile()
@@ -291,7 +292,6 @@ class PianoPlay():
 				# Read and add up the delta time.
 				deltaTime = self.decodeVariableLengthQuantity()
 				self.realDeltaTime += deltaTime
-				print(self.realDeltaTime)
 
 
 				# Read the first byte. I can parse this to know what kind of MIDI event is here. F0 and F7 events are skipped.
@@ -462,7 +462,6 @@ class PianoPlay():
 
 					# Note off
 					elif (midiMessage == 0b1000):
-						print("Note off")
 						pitch = dataByte1 # Pitch of the note
 						keyIndex = pitch - self.pitchStart
 
@@ -846,7 +845,6 @@ class FileManager():
 
 
 pn = PianoPlay() # This just calls the above class.
-print(pn.keyPresses[50])
 
 # Design ideas. These are things I want to add in the future.
 #
@@ -871,8 +869,8 @@ print(pn.keyPresses[50])
 # To do next time:
 # For some reason the millisecond times of key presses are getting wildly large gaps between them. This signifies there's an error in how I'm calculating them. I'll need to look into this.
 # Note on above. Further investigation reveals a pattern that looks like it has to do with how I'm decoding the variable-length values. Further testing required.
-
-
+# Definitely change how I'm finding the relative path. It will not work if literally anything is renamed.
+# Update comments about usage.
 
 
 
