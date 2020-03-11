@@ -1,0 +1,27 @@
+3D side:
+    >Need to fully model an upright piano (Grand is a bit much and can't really be put into different scenes well).
+    >Create an environment to showcase the technology. I plan on buying real textures for this (A first for me :D).
+    >More a blender UI thing, I want to find a way to work with blender's add-on API so that people don't need raw files for this.
+    
+Code and 3D:
+    >I want to find a way to light up the keys that get played, in a similar style to Synthesia (But better :) ).
+    >Find some way to allow "actions" to be used instead of predefined animation code I've made.
+    Doing so will open up the ability to do more instruments and make people do a happy smile face.
+    
+    
+Code:
+    > Allow users to create an animation action, and use that on the keys.
+    > Support for instruments other pianos might be a long way off, but if people request it I'll look into it.
+    > Allow keys to light up in colour when pressed.
+    > Support for other formats? I don't know any others right now, but maybe I could make a custom one in the future?
+    > Maybe start using dictionaries when searching for things such as metaevent tags.
+    > Add multi track support, so a user can specify two pianos or instruments or whatever.
+    > Test whether doing two passes on the midi file to figure out list size will be faster than appending the data to the lists.
+    > Remake code to be less... bad. First Python project so it's pretty disorganized.
+    > Rotate keys based on Z axis down, rather than my current system (Euler X)
+    
+    
+Other:
+    >I'd like to add in some basic soundfont stuff that can play alongside the animation.
+    I've never touched audio in blender or soundfonts however, so this might be over my head.
+    

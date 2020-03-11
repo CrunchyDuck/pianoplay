@@ -8,14 +8,16 @@ class PianoPlay():
 		### USER VARIABLES ###
 		# You, the user, have to fill in the following variables.
 
-		self.objectName = "CDPKey"  # This is the name it will search for on the objects that you would like to apply the animations to. It'll find all objects with this name, and then order by the suffix number.
+		self.objectName = "CDPKey"  # This is the name it will search for on the objects that you would like to apply the animations to.
+			# It'll find all objects with this name, and then order by the suffix number.
 			# E.G CDPKey.000, CDPKey1, CDPKey2.
 			# The lower numbered objects will have the lower pitch notes, E.G CDPKey0 will have pitch 0, CDPKey1 will have pitch 1, CDPKey2 will have pitch 2...
-		self.keyNum = 128 # How many keys we'll want to index. There is a maximum of 128 on MIDI files.
-		self.pitchStart = 0  # The pitch that the lowest key will have. 0 is the lowest pitch.
-			# This is based on the MIDI indexing, so pitchStart 60 is C4. pitchStart 0 is C0.
-			# It will count up keyNum times from this position.
-			# Pitches in the MIDI file that aren't within this range will be ignored.
+			# If your keys aren't already ordered, I've made a script (OrderByX.py) that can do this, however you will need to understand some basic scripting to comprehend it.
+		self.keyNum = 88 # How many keys we'll want to index. A standard piano has 88 keys. A harpsichord has 60 keys. One octave is 12 keys.
+			# There is a maximum of 128 on MIDI files.
+		self.pitchStart = 21  # The pitch that the lowest key will have.
+			# 0 is the lowest pitch. Key 60 is "middle C" (C4).
+			# An 88 key piano starts at A0, which is key 21.
 		fileName = "myuu - Reversion.mid"  # The location of the file on the hard drive.
 			# It must include the file extension E.G .mid, .midi, .txt, and must be the full path, E.G C:/Users/Me/Music/song.mid
 		self.FPS = 60 # This is an integer. It will be the frame rate that the final animation of the instrument should be played at.
@@ -57,7 +59,7 @@ class PianoPlay():
 		# I'd like to apologize in advance - This is my first time using Python seriously, I hail from C# and GML myself.
 		# I also don't like Python much, so I've admittedly been mean to it and didn't put the time in to learn stuff like scope properly.
 		# I hope it's not too difficult for you to work with. I'll give a couple of resources about MIDI works, to help you understand it:
-		# https://www.music-software-development.com/midi-tutorial.html
+		# https://www.music-software-development.com/midi-	tutorial.html
 		# https://www.midi.org/specifications-old/item/the-midi-1-0-specification
 		# You'll need to make an account for that last one, but it's also the most important. It explains how the data in MIDI is stored, especially under the segment about "Chunking"
 
@@ -713,6 +715,15 @@ class PianoPlay():
 				i += 1
 
 	def animateKeys(self):
+		"""
+		This will apply all of the key frames and animations to the keys themselves.
+		There should be a total of [(times note was pressed * 4) + 2] keyframes.
+		The +2 keyframes are my "null" keyframes at the start of the song. We multiply by 4 as each "event" has a start and end keyframe, and each note in the song requires two events.
+		"""
+		# NOTE TO SELF ON ANIMATION:
+		# Piano keys, when pressed, seem to have a somewhat linear speed until stoppage.
+		# However when released, they tend to bounce roughly 3 times, and take about .4 seconds (Need better samples) in to return to neutral state.
+		# Of course if the release velocity is lower, it should take longer and bounce less times. I'm not sure how possible this is to do with Blender's built in F-Curves.
 		if(self.errTriggered):
 			return()
 
@@ -848,32 +859,19 @@ pn = PianoPlay() # This just calls the above class.
 
 # Design ideas. These are things I want to add in the future.
 #
-# Allow users to create an animation action, and use that on the keys.
-# Support for instruments other pianos might be a long way off, but if people request it I'll look into it.
-# Allow keys to light up in colour when pressed.
-# Support for other formats? I don't know any others right now, but maybe I could make a custom one in the future?
-# Maybe start using dictionaries when searching for things such as metaevent tags.
-# Add multi track support, so a user can specify two pianos or instruments or whatever.
-# Test whether doing two passes on the midi file to figure out list size will be faster than appending the data to the lists.
-# Remake code to be less... bad.
-# Rotate keys based on Z axis down, rather than my current system (Euler X)
+
 
 
 # Some notes I want to make about the system I'm using.
 # Right now, because I hand make the animations, they won't really work in any setting besides the one that I've defined.
-# Because of this, I'm also *setting* the angle that a key plays at, instead of moving it relative to its current position. This will absolutely cause problems if the instrument is rotated at all.
-#
-# Really need to find a way to avoid using fc.find in my code. Animating via python code in Blender is a huge pain in the ass, so I just took the first answer I found in this case.
+# I'm current animating the keys by simply rotating towards a (Euler X) angle.
+# I think this will cause problems at different orientations, and I should look in to vector based animation if that's a thing in Blender.
 
 
 # To do next time:
-# For some reason the millisecond times of key presses are getting wildly large gaps between them. This signifies there's an error in how I'm calculating them. I'll need to look into this.
-# Note on above. Further investigation reveals a pattern that looks like it has to do with how I'm decoding the variable-length values. Further testing required.
-# Definitely change how I'm finding the relative path. It will not work if literally anything is renamed.
+# Definitely change how I'm finding the relative file path. It will not work if literally anything is renamed. Maybe I'll just settle for making the user input the whole path.
 # Update comments about usage.
-# Check why animation is too fast.
 # Add in <division> type 1 code.
-# Model a full piano and arena to showcase the software.
 
 
 
