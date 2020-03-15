@@ -23,7 +23,7 @@ class PianoPlay():
 		self.FPS = 60 # This is an integer. It will be the frame rate that the final animation of the instrument should be played at.
 			# This should be the same as the frame rate of blender if you don't know what you're doing.
 			# A higher frame rate will mean more accurate timing and more fluid looking animations.
-		self.frameStart = 100 # The frame that the animation should start on.
+		self.frameStart = 10 # The frame that the animation should start on.
 
 
 
@@ -99,7 +99,7 @@ class PianoPlay():
 		self.velocityOffset = self.FPS * 0.3  # How many frames the velocity can offset a key. Should be relative to the FPS.
 		self.pressTime = self.FPS * 0.05 # How long it should take for a key to be pressed at maximum velocity.
 		self.releaseTime = self.FPS * 0.15 # How long it takes for a key to return to its original position when released.
-		self.keyAngle = 3 # How much the key should rotate when pressed down, in Euler degrees.
+		self.keyAngle = 3.35 # How much the key should rotate when pressed down, in Euler degrees.
 
 		self.keyAngle = math.radians(self.keyAngle)
 
@@ -448,7 +448,6 @@ class PianoPlay():
 					if (midiMessage == 0b1001):
 						pitch = dataByte1
 						keyIndex = pitch - self.pitchStart # This will check if the key's pitch is within range of the user's settings.
-
 						# I'm certain the following code has to be inefficient.
 						if(keyIndex >= 0) and (keyIndex < self.keyNum): # If the pitch is within range of the user's defined values...
 							velocity = dataByte2
@@ -732,6 +731,7 @@ class PianoPlay():
 			activeKeyData = self.keyPresses[i]
 			keyEvents = int(len(activeKeyData) / 3) # This will tells us how many times the key is pressed or released. As each event has 3 pieces of data, we divide by 3 to get the real number.
 			activeKeyObject = self.objectList[i]
+			print(activeKeyObject)
 
 			for j in range(keyEvents): # For each event related to this pitch...
 				eventIndex = j * 3

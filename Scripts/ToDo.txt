@@ -10,6 +10,7 @@ Code and 3D:
     
     
 Code:
+    > Procedurally create materials for every key.
     > Allow users to create an animation action, and use that on the keys.
     > Support for instruments other pianos might be a long way off, but if people request it I'll look into it.
     > Allow keys to light up in colour when pressed.
