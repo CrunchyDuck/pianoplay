@@ -2,6 +2,8 @@
     >Need to fully model an upright piano (Grand is a bit much and can't really be put into different scenes well).
     >Create an environment to showcase the technology. I plan on buying real textures for this (A first for me :D).
     >More a blender UI thing, I want to find a way to work with blender's add-on API so that people don't need raw files for this.
+    >Add some variation to how long a key is pressed completely randomly, especially on arpeggios
+    
     
 Code and 3D:
     >I want to find a way to light up the keys that get played, in a similar style to Synthesia (But better :) ).

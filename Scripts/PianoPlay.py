@@ -98,7 +98,7 @@ class PianoPlay():
 		self.millisecondsPerFrame = (1 / self.FPS) * 1000
 		self.velocityOffset = self.FPS * 0.3  # How many frames the velocity can offset a key. Should be relative to the FPS.
 		self.pressTime = self.FPS * 0.05 # How long it should take for a key to be pressed at maximum velocity.
-		self.releaseTime = self.FPS * 0.15 # How long it takes for a key to return to its original position when released.
+		self.releaseTime = self.FPS * 0.12 # How long it takes for a key to return to its original position when released.
 		self.keyAngle = 3.35 # How much the key should rotate when pressed down, in Euler degrees.
 
 		self.keyAngle = math.radians(self.keyAngle)
@@ -756,6 +756,11 @@ class PianoPlay():
 					endFrame = targetFrame
 					activeKeyObject.rotation_euler[0] = self.keyAngle
 					activeKeyObject.keyframe_insert(data_path = "rotation_euler", frame = endFrame, index = 0)
+
+					# Set F-Curves of key
+					fc = activeKeyObject.animation_data.action.fcurves
+					targetFC = fc.find("rotation_euler", index = 0)
+					targetFC.keyframe_points[-2].interpolation = "BEZIER"
 				else:
 					# Start frame
 					startFrame = (targetFrame - self.releaseTime)
@@ -767,11 +772,30 @@ class PianoPlay():
 					activeKeyObject.rotation_euler[0] = 0
 					activeKeyObject.keyframe_insert(data_path = "rotation_euler", frame = endFrame, index = 0)
 
-				# Set F-Curves of key
-				fc = activeKeyObject.animation_data.action.fcurves
-				targetFC = fc.find("rotation_euler", index = 0)
-				targetFC.keyframe_points[-2].interpolation = "LINEAR"
+					# Set F-Curves of key
+					fc = activeKeyObject.animation_data.action.fcurves
+					targetFC = fc.find("rotation_euler", index = 0)
+					targetFC.keyframe_points[-2].interpolation = "LINEAR"
+
+				# The second keyframe should always be linear to lead into the next easily.
 				targetFC.keyframe_points[-1].interpolation = "LINEAR"
+
+				# Here's a list of all of the interpolation methods and what they do. I hope you're viewing this in an IDE so you can collapse it if you don't need it.
+				#
+				#	CONSTANT Constant, No interpolation, value of A gets held until B is encountered.
+				#	LINEAR Linear, Straight-line interpolation between A and B (i.e. no ease in/out).
+				#	BEZIER Bezier, Smooth interpolation between A and B, with some control over curve shape.
+				#	SINE Sinusoidal, Sinusoidal easing (weakest, almost linear but with a slight curvature).
+				#	QUAD Quadratic, Quadratic easing.
+				#	CUBIC Cubic, Cubic easing.
+				#	QUART Quartic, Quartic easing.
+				#	QUINT Quintic, Quintic easing.
+				#	EXPO Exponential, Exponential easing (dramatic).
+				#	CIRC Circular, Circular easing (strongest and most dynamic).
+				#	BACK Back, Cubic easing with overshoot and settle.
+				#	BOUNCE Bounce, Exponentially decaying parabolic bounce, like when objects collide.
+				#	ELASTIC Elastic, Exponentially decaying sine wave, like an elastic band.
+
 
 
 
