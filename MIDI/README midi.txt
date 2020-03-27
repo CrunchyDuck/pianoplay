@@ -1,0 +1,1 @@
+You should put any .mid files you want to read from my script into this folder.

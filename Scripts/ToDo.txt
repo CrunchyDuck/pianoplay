@@ -1,18 +1,13 @@
 3D side:
-    >Need to fully model an upright piano (Grand is a bit much and can't really be put into different scenes well).
-    >Create an environment to showcase the technology. I plan on buying real textures for this (A first for me :D).
-    >More a blender UI thing, I want to find a way to work with blender's add-on API so that people don't need raw files for this.
-    >Add some variation to how long a key is pressed completely randomly, especially on arpeggios
-    
-    
-Code and 3D:
-    >I want to find a way to light up the keys that get played, in a similar style to Synthesia (But better :) ).
-    >Find some way to allow "actions" to be used instead of predefined animation code I've made.
-    Doing so will open up the ability to do more instruments and make people do a happy smile face.
-    
-    
+    > I want to model a full piano and environment to use alongside the tone of the song.
+    > Create an environment to showcase the technology. I plan on buying real textures for this (A first for me :D).
+    > More a blender UI thing, I want to find a way to work with blender's add-on API so that people don't need raw files for this.
+    > Add some variation to how long a key is pressed for randomly, especially on arpeggios
+    > Add in sustain pedal animation
+	
 Code:
-    > Procedurally create materials for every key.
+	> Add pressure sensitivity back in.
+    > Procedurally create materials for every key to allow colour animation
     > Allow users to create an animation action, and use that on the keys.
     > Support for instruments other pianos might be a long way off, but if people request it I'll look into it.
     > Allow keys to light up in colour when pressed.
@@ -21,10 +16,11 @@ Code:
     > Add multi track support, so a user can specify two pianos or instruments or whatever.
     > Test whether doing two passes on the midi file to figure out list size will be faster than appending the data to the lists.
     > Remake code to be less... bad. First Python project so it's pretty disorganized.
-    > Rotate keys based on Z axis down, rather than my current system (Euler X)
-    
+    > Rotate keys based on local "down", rather than my current system (Euler X regardless of position or orientation.)
+    > Change how I'm getting the relative path right now.
+    > Add in support for <division> type 1 MIDI files.
     
 Other:
-    >I'd like to add in some basic soundfont stuff that can play alongside the animation.
+    > I'd like to add in some basic soundfont stuff that can play alongside the animation.
     I've never touched audio in blender or soundfonts however, so this might be over my head.
-    
+     

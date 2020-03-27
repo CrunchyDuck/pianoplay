@@ -12,3 +12,4 @@ for i in range(101):
 	draw.point((0, i), fill = col)
 
 image.save("Stripes.png")
+
